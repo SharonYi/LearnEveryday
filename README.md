@@ -1,12 +1,39 @@
-# LeetCode Top 100 算法题学习
+# LearnEveryday
 
-## 学习目标
+每日学习项目集合，包含算法学习、传统文化等多个领域的实践项目。
+
+## 项目概览
+
+本项目包含多个独立的子项目，每个子项目都有自己的README文档和完整的功能实现。
+
+### 项目列表
+
+| 项目名称 | 项目目录 | 项目描述 |
+|---------|---------|---------|
+| LeetCode Top 100 算法题学习 | `dynamic-programming/` | 系统学习LeetCode Hot 100经典算法题目 |
+| 八字解读与紫微斗数 | `bazi-divination/` | 基于中国传统命理学的网页应用，结合生辰八字和紫微斗数进行详细解读 |
+
+---
+
+## 项目一：LeetCode Top 100 算法题学习
+
+### 项目简介
 系统学习LeetCode Hot 100经典算法题目，提升算法思维和解题能力。
 
-## 学习思路
+### 项目目录
+```
+dynamic-programming/
+├── README.md              # 动态规划专题学习笔记
+├── 0070-climbing-stairs.md  # 70. 爬楼梯 解题笔记
+└── 0070_climbing_stairs.py   # 70. 爬楼梯 代码实现
+```
 
-### 1. 分类学习
-将题目按算法类型分类学习，包括：
+### 学习目标
+- 提升算法思维和解题能力
+- 掌握常见算法类型的解题套路
+- 为技术面试做好准备
+
+### 学习内容分类
 - 动态规划（Dynamic Programming）
 - 双指针（Two Pointers）
 - 滑动窗口（Sliding Window）
@@ -18,46 +45,208 @@
 - 哈希表（Hash Table）
 - 栈/队列（Stack/Queue）
 
-### 2. 学习方法
-1. **理解题意**：仔细阅读题目，明确输入输出和约束条件
-2. **思路分析**：思考可能的解法，分析时间复杂度和空间复杂度
-3. **代码实现**：编写简洁、高效的代码
-4. **总结归纳**：记录解题思路、关键代码和心得体会
-5. **复习巩固**：定期回顾已做题目，加深理解
+### 详细文档
+详见 [dynamic-programming/README.md](./dynamic-programming/README.md)
 
-### 3. 学习顺序
-从动态规划开始学习，因为这类题目：
-- 是面试高频考点
-- 能有效训练算法思维
-- 有明确的解题套路
+---
 
-## 题目分类
+## 项目二：八字解读与紫微斗数
 
-### 动态规划
-- [70. 爬楼梯](./dynamic-programming/0070-climbing-stairs.md)
-- [53. 最大子数组和](./dynamic-programming/0053-maximum-subarray.md)
-- [300. 最长递增子序列](./dynamic-programming/0300-longest-increasing-subsequence.md)
-- [1143. 最长公共子序列](./dynamic-programming/1143-longest-common-subsequence.md)
-- [120. 三角形最小路径和](./dynamic-programming/0120-triangle.md)
-- [152. 乘积最大子数组](./dynamic-programming/0152-maximum-product-subarray.md)
-- [64. 最小路径和](./dynamic-programming/0064-minimum-path-sum.md)
-- [62. 不同路径](./dynamic-programming/0062-unique-paths.md)
-- [198. 打家劫舍](./dynamic-programming/0198-house-robber.md)
-- [213. 打家劫舍 II](./dynamic-programming/0213-house-robber-ii.md)
-- [322. 零钱兑换](./dynamic-programming/0322-coin-change.md)
-- [518. 零钱兑换 II](./dynamic-programming/0518-coin-change-ii.md)
-- [139. 单词拆分](./dynamic-programming/0139-word-break.md)
-- [91. 解码方法](./dynamic-programming/0091-decode-ways.md)
-- [309. 最佳买卖股票时机含冷冻期](./dynamic-programming/0309-best-time-to-buy-and-sell-stock-with-cooldown.md)
-- [121. 买卖股票的最佳时机](./dynamic-programming/0121-best-time-to-buy-and-sell-stock.md)
-- [122. 买卖股票的最佳时机 II](./dynamic-programming/0122-best-time-to-buy-and-sell-stock-ii.md)
-- [123. 买卖股票的最佳时机 III](./dynamic-programming/0123-best-time-to-buy-and-sell-stock-iii.md)
-- [188. 买卖股票的最佳时机 IV](./dynamic-programming/0188-best-time-to-buy-and-sell-stock-iv.md)
-- [416. 分割等和子集](./dynamic-programming/0416-partition-equal-subset-sum.md)
-- [494. 目标和](./dynamic-programming/0494-target-sum.md)
+### 项目简介
+一个基于中国传统命理学的网页应用，结合生辰八字和紫微斗数进行详细解读。用户只需输入出生年月日时和性别，即可获得专业的命理分析。
+
+### 项目目录
+```
+bazi-divination/
+├── README.md              # 项目说明文档
+└── bazi-divination.html   # 主程序文件（包含HTML、CSS、JavaScript）
+```
+
+### 功能特点
+
+#### 1. 生辰八字排盘
+- **年柱**：以立春为界，准确计算年干支
+- **月柱**：以节气（十二节）为界，使用五虎遁口诀
+- **日柱**：使用高氏日柱公式，精确计算日干支
+- **时柱**：使用五鼠遁口诀，考虑子时特殊处理
+
+#### 2. 周易卦象分析
+- 根据生辰八字生成对应的六十四卦
+- 展示卦象图形（阳爻/阴爻）
+- 提供详细的卦象解读
+
+#### 3. 紫微斗数命盘
+- **命宫与身宫**：根据出生时间确定
+- **十二宫位**：命宫、兄弟宫、夫妻宫、子女宫、财帛宫、疾厄宫、迁移宫、交友宫、事业宫、田宅宫、福德宫、父母宫
+- **主星分布**：紫微、天机、太阳、武曲、天同、廉贞、天府、太阴、贪狼、巨门、天相、天梁、七杀、破军
+- **四化星**：化禄、化权、化科、化忌
+
+#### 4. 详细解读内容
+- **性格分析**：根据命宫主星分析性格特点
+- **感情婚姻**：分析感情运势和配偶特点
+- **财运分析**：分析财运状况和理财建议
+- **事业发展**：分析事业方向和发展建议
+- **综合建议**：结合命盘特点给出人生指导
+
+### 技术实现
+- **HTML5**：页面结构
+- **CSS3**：样式设计（深色主题、响应式布局）
+- **原生JavaScript**：核心算法和交互逻辑
+
+### 使用方法
+```bash
+# 方式一：直接打开HTML文件
+# 双击 bazi-divination/bazi-divination.html
+
+# 方式二：使用本地服务器
+cd bazi-divination
+python3 -m http.server 8080
+# 浏览器访问 http://localhost:8080/bazi-divination.html
+```
+
+### 详细文档
+详见 [bazi-divination/README.md](./bazi-divination/README.md)
+
+---
+
+## 项目结构总览
+
+```
+LearnEveryday/
+├── README.md                    # 总项目说明文档（本文档）
+├── dynamic-programming/         # LeetCode算法学习项目
+│   ├── README.md               # 动态规划专题说明
+│   ├── 0070-climbing-stairs.md # 70. 爬楼梯 解题笔记
+│   └── 0070_climbing_stairs.py  # 70. 爬楼梯 代码实现
+└── bazi-divination/            # 八字解读与紫微斗数项目
+    ├── README.md               # 项目详细说明
+    └── bazi-divination.html    # 主程序文件
+```
+
+---
+
+## 项目说明
+
+### 项目独立性
+每个子项目都是独立的，有自己的：
+- README文档（项目说明、使用方法、详细文档）
+- 独立的代码实现
+- 可以单独运行和维护
+
+### 项目特色
+
+#### 算法学习项目 (`dynamic-programming/`)
+- **系统学习**：按照算法类型分类学习
+- **详细笔记**：每道题都有完整的解题思路和代码实现
+- **持续更新**：逐步完成LeetCode Hot 100所有题目
+
+#### 传统文化项目 (`bazi-divination/`)
+- **专业算法**：使用传统命理书籍中的标准算法
+- **详细解读**：不仅仅是排盘，还有通俗易懂的解读内容
+- **美观界面**：深色主题，响应式设计，支持手机和电脑
+- **知识普及**：包含完整的紫微斗数基础知识介绍
+
+---
+
+## 如何开始
+
+### 1. 算法学习
+```bash
+# 进入算法学习目录
+cd dynamic-programming
+
+# 查看已有题目
+ls -la
+
+# 阅读解题笔记（以爬楼梯为例）
+cat 0070-climbing-stairs.md
+
+# 运行代码
+python3 0070_climbing_stairs.py
+```
+
+### 2. 八字解读
+```bash
+# 进入八字解读目录
+cd bazi-divination
+
+# 方式一：直接用浏览器打开HTML文件
+# 方式二：启动本地服务器
+python3 -m http.server 8080
+
+# 浏览器访问
+# http://localhost:8080/bazi-divination.html
+```
+
+---
 
 ## 学习记录
 
+### 算法学习进度
 - **开始日期**: 2026-04-20
-- **当前进度**: 动态规划 - 第1题（70. 爬楼梯）
-- **已完成题目**: 0/100
+- **当前进度**: 动态规划专题
+- **已完成题目**: 
+  - [70. 爬楼梯](./dynamic-programming/0070-climbing-stairs.md)
+
+### 传统文化项目
+- **项目状态**: 已完成基础功能
+- **当前版本**: v1.0
+- **功能模块**: 
+  - ✅ 生辰八字排盘
+  - ✅ 周易卦象分析
+  - ✅ 紫微斗数命盘
+  - ✅ 详细解读内容
+
+---
+
+## 未来规划
+
+### 算法学习项目
+- [ ] 完成LeetCode Hot 100所有题目
+- [ ] 添加更多算法类型的专题学习
+- [ ] 编写算法总结和解题套路文档
+- [ ] 添加测试用例和代码优化
+
+### 传统文化项目
+- [ ] 添加真太阳时校正功能
+- [ ] 完善紫微斗数星曜排布算法
+- [ ] 添加五行分析和十神解读
+- [ ] 实现大运流年分析
+- [ ] 添加更多传统命理知识介绍
+- [ ] 支持农历日期输入
+- [ ] 添加保存和分享功能
+
+---
+
+## 关于本项目
+
+### 项目理念
+"LearnEveryday" 意味着每日学习，持续进步。本项目旨在：
+1. **提升技术能力**：通过算法学习提升编程和逻辑思维能力
+2. **传承文化**：通过传统文化项目学习和传承中华传统文化
+3. **实践应用**：将学习到的知识应用到实际项目中
+
+### 学习建议
+1. **算法学习**：建议每天至少完成一道算法题目，注重理解而非记忆
+2. **文化学习**：建议结合相关书籍深入学习，本项目仅为入门级演示
+3. **持续实践**：学习的最好方式是实践，多动手写代码、多思考
+
+---
+
+## 免责声明
+
+1. **算法学习**：本项目的算法题目来自LeetCode，仅供学习交流之用
+2. **传统文化**：八字解读和紫微斗数项目基于中国传统命理学，仅供娱乐和文化交流，不构成任何人生决策的依据
+3. **仅供参考**：所有内容仅供学习和参考，请自行判断和选择
+
+---
+
+## 联系方式
+
+如有任何问题或建议，欢迎交流学习。
+
+---
+
+**最后更新**: 2026-04-21
+
+**项目维护者**: LearnEveryday Team

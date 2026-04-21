@@ -1,0 +1,1192 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>八字解读 - 周易八卦解卦</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Microsoft YaHei', 'SimHei', sans-serif;
+            background: linear-gradient(135deg, #1a1a2e, #16213e);
+            min-height: 100vh;
+            color: #e0e0e0;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            color: #e0c068;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .subtitle {
+            font-size: 1.1rem;
+            color: #a0a0a0;
+        }
+        
+        .form-section {
+            background: rgba(255,255,255,0.05);
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 30px;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #e0c068;
+            font-weight: bold;
+        }
+        
+        .input-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+        }
+        
+        .input-group {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        select, input {
+            padding: 12px 15px;
+            border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 8px;
+            background: rgba(255,255,255,0.08);
+            color: #e0e0e0;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+        
+        select:focus, input:focus {
+            outline: none;
+            border-color: #e0c068;
+            box-shadow: 0 0 10px rgba(224, 192, 104, 0.3);
+        }
+        
+        select option {
+            background: #16213e;
+            color: #e0e0e0;
+        }
+        
+        .btn {
+            background: linear-gradient(135deg, #e0c068, #c9a04f);
+            color: #1a1a2e;
+            border: none;
+            padding: 15px 40px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: block;
+            margin: 30px auto 0;
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(224, 192, 104, 0.4);
+        }
+        
+        .result-section {
+            background: rgba(255,255,255,0.05);
+            border-radius: 15px;
+            padding: 30px;
+            border: 1px solid rgba(255,255,255,0.1);
+            display: none;
+        }
+        
+        .result-section.show {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .result-title {
+            color: #e0c068;
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            text-align: center;
+            border-bottom: 1px solid rgba(224, 192, 104, 0.3);
+            padding-bottom: 15px;
+        }
+        
+        .bazi-display {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .bazi-column {
+            text-align: center;
+            background: rgba(255,255,255,0.03);
+            border-radius: 10px;
+            padding: 15px;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        
+        .bazi-label {
+            font-size: 0.9rem;
+            color: #a0a0a0;
+            margin-bottom: 10px;
+        }
+        
+        .heavenly-stem {
+            font-size: 1.8rem;
+            color: #e0c068;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        
+        .earthly-branch {
+            font-size: 1.5rem;
+            color: #7fb3d5;
+            font-weight: bold;
+        }
+        
+        .gua-section {
+            margin-top: 30px;
+        }
+        
+        .gua-title {
+            color: #e0c068;
+            font-size: 1.3rem;
+            margin-bottom: 15px;
+        }
+        
+        .gua-name {
+            font-size: 2rem;
+            color: #e0c068;
+            text-align: center;
+            margin: 20px 0;
+        }
+        
+        .gua-symbol {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            margin: 30px 0;
+        }
+        
+        .gua-line {
+            display: flex;
+            gap: 5px;
+        }
+        
+        .yao {
+            width: 80px;
+            height: 10px;
+            background: #e0c068;
+        }
+        
+        .yao.broken {
+            background: transparent;
+            position: relative;
+        }
+        
+        .yao.broken::before,
+        .yao.broken::after {
+            content: '';
+            position: absolute;
+            width: 35px;
+            height: 10px;
+            background: #e0c068;
+            top: 0;
+        }
+        
+        .yao.broken::before {
+            left: 0;
+        }
+        
+        .yao.broken::after {
+            right: 0;
+        }
+        
+        .interpretation {
+            background: rgba(255,255,255,0.03);
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 20px;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        
+        .interpretation h3 {
+            color: #e0c068;
+            margin-bottom: 10px;
+        }
+        
+        .interpretation p {
+            margin-bottom: 15px;
+            line-height: 1.8;
+        }
+        
+        .loading {
+            text-align: center;
+            padding: 40px;
+            color: #a0a0a0;
+        }
+        
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .bazi-display {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .input-row {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>八字解读</h1>
+            <p class="subtitle">输入生辰八字，结合周易八卦进行解卦</p>
+        </header>
+        
+        <div class="form-section">
+            <form id="baziForm">
+                <div class="form-group">
+                    <label>基本信息</label>
+                    <div class="input-row">
+                        <div class="input-group">
+                            <label for="gender">性别</label>
+                            <select id="gender" required>
+                                <option value="">请选择性别</option>
+                                <option value="male">男</option>
+                                <option value="female">女</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label>出生信息</label>
+                    <div class="input-row">
+                        <div class="input-group">
+                            <label for="year">年份</label>
+                            <select id="year" required>
+                                <option value="">请选择年份</option>
+                            </select>
+                        </div>
+                        <div class="input-group">
+                            <label for="month">月份</label>
+                            <select id="month" required>
+                                <option value="">请选择月份</option>
+                                <option value="1">一月</option>
+                                <option value="2">二月</option>
+                                <option value="3">三月</option>
+                                <option value="4">四月</option>
+                                <option value="5">五月</option>
+                                <option value="6">六月</option>
+                                <option value="7">七月</option>
+                                <option value="8">八月</option>
+                                <option value="9">九月</option>
+                                <option value="10">十月</option>
+                                <option value="11">十一月</option>
+                                <option value="12">十二月</option>
+                            </select>
+                        </div>
+                        <div class="input-group">
+                            <label for="day">日期</label>
+                            <select id="day" required>
+                                <option value="">请选择日期</option>
+                            </select>
+                        </div>
+                        <div class="input-group">
+                            <label for="hour">时辰</label>
+                            <select id="hour" required>
+                                <option value="">请选择时辰</option>
+                                <option value="23">子时 (23:00-01:00)</option>
+                                <option value="1">丑时 (01:00-03:00)</option>
+                                <option value="3">寅时 (03:00-05:00)</option>
+                                <option value="5">卯时 (05:00-07:00)</option>
+                                <option value="7">辰时 (07:00-09:00)</option>
+                                <option value="9">巳时 (09:00-11:00)</option>
+                                <option value="11">午时 (11:00-13:00)</option>
+                                <option value="13">未时 (13:00-15:00)</option>
+                                <option value="15">申时 (15:00-17:00)</option>
+                                <option value="17">酉时 (17:00-19:00)</option>
+                                <option value="19">戌时 (19:00-21:00)</option>
+                                <option value="21">亥时 (21:00-23:00)</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                
+                <button type="submit" class="btn">开始解卦</button>
+            </form>
+        </div>
+        
+        <div class="result-section" id="resultSection">
+            <h2 class="result-title">解卦结果</h2>
+            
+            <div id="baziResult">
+                <h3 class="gua-title">生辰八字</h3>
+                <div class="bazi-display" id="baziDisplay">
+                </div>
+            </div>
+            
+            <div class="gua-section">
+                <h3 class="gua-title">周易卦象</h3>
+                <div class="gua-name" id="guaName"></div>
+                <div class="gua-symbol" id="guaSymbol"></div>
+                <div class="interpretation" id="guaInterpretation">
+                </div>
+            </div>
+            
+            <div class="ziwei-section" id="ziweiSection" style="display: none;">
+                <h3 class="gua-title">紫微斗数命盘</h3>
+                
+                <div class="interpretation" id="ziweiPrinciple">
+                </div>
+                
+                <div class="mingpan-summary" id="mingpanSummary">
+                </div>
+                
+                <div class="interpretation" id="ziweiInterpretation">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const heavenlyStems = ['甲', '乙', '丙', '丁', '戊', '己', '庚', '辛', '壬', '癸'];
+        const earthlyBranches = ['子', '丑', '寅', '卯', '辰', '巳', '午', '未', '申', '酉', '戌', '亥'];
+        
+        const solarTerms2024 = {
+            'lichun': { month: 2, day: 4, hour: 16, minute: 26 },
+            'jingzhe': { month: 3, day: 5, hour: 10, minute: 22 },
+            'qingming': { month: 4, day: 4, hour: 14, minute: 2 },
+            'lixia': { month: 5, day: 5, hour: 8, minute: 9 },
+            'mangzhong': { month: 6, day: 5, hour: 12, minute: 9 },
+            'xiaoshu': { month: 7, day: 6, hour: 22, minute: 20 },
+            'liqiu': { month: 8, day: 7, hour: 12, minute: 9 },
+            'bailu': { month: 9, day: 7, hour: 0, minute: 11 },
+            'hanlu': { month: 10, day: 8, hour: 5, minute: 12 },
+            'lidong': { month: 11, day: 7, hour: 8, minute: 3 },
+            'daxue': { month: 12, day: 6, hour: 23, minute: 17 },
+            'xiaohan2025': { month: 1, day: 5, hour: 17, minute: 49 },
+            'lichun2025': { month: 2, day: 3, hour: 22, minute: 10 }
+        };
+        
+        const solarTerms2025 = {
+            'lichun': { month: 2, day: 3, hour: 22, minute: 10 },
+            'jingzhe': { month: 3, day: 5, hour: 16, minute: 12 },
+            'qingming': { month: 4, day: 4, hour: 20, minute: 13 },
+            'lixia': { month: 5, day: 5, hour: 13, minute: 53 },
+            'mangzhong': { month: 6, day: 5, hour: 17, minute: 59 },
+            'xiaoshu': { month: 7, day: 7, hour: 4, minute: 6 },
+            'liqiu': { month: 8, day: 7, hour: 17, minute: 51 },
+            'bailu': { month: 9, day: 7, hour: 5, minute: 52 },
+            'hanlu': { month: 10, day: 8, hour: 11, minute: 1 },
+            'lidong': { month: 11, day: 7, hour: 13, minute: 48 },
+            'daxue': { month: 12, day: 7, hour: 5, minute: 5 },
+            'xiaohan2026': { month: 1, day: 5, hour: 23, minute: 32 },
+            'lichun2026': { month: 2, day: 4, hour: 4, minute: 28 }
+        };
+        
+        const solarTerms2026 = {
+            'lichun': { month: 2, day: 4, hour: 4, minute: 28 },
+            'jingzhe': { month: 3, day: 5, hour: 22, minute: 5 },
+            'qingming': { month: 4, day: 5, hour: 2, minute: 0 },
+            'lixia': { month: 5, day: 5, hour: 19, minute: 32 },
+            'mangzhong': { month: 6, day: 5, hour: 23, minute: 44 },
+            'xiaoshu': { month: 7, day: 7, hour: 9, minute: 52 },
+            'liqiu': { month: 8, day: 7, hour: 23, minute: 40 },
+            'bailu': { month: 9, day: 7, hour: 11, minute: 41 },
+            'hanlu': { month: 10, day: 8, hour: 16, minute: 43 },
+            'lidong': { month: 11, day: 7, hour: 19, minute: 31 },
+            'daxue': { month: 12, day: 7, hour: 10, minute: 52 },
+            'xiaohan2027': { month: 1, day: 5, hour: 5, minute: 13 },
+            'lichun2027': { month: 2, day: 3, hour: 10, minute: 16 }
+        };
+        
+        function getSolarTermsData(year) {
+            if (year === 2024) return solarTerms2024;
+            if (year === 2025) return solarTerms2025;
+            if (year === 2026) return solarTerms2026;
+            
+            const baseYear = 2024;
+            const yearsDiff = year - baseYear;
+            const adjustedTerms = {};
+            
+            for (const [key, term] of Object.entries(solarTerms2024)) {
+                if (key === 'xiaohan2025' || key === 'lichun2025') continue;
+                adjustedTerms[key] = {
+                    month: term.month,
+                    day: term.day,
+                    hour: (term.hour + yearsDiff * 6) % 24,
+                    minute: term.minute
+                };
+            }
+            return adjustedTerms;
+        }
+        
+        function isAfterSolarTerm(year, month, day, hour, term) {
+            if (month > term.month) return true;
+            if (month < term.month) return false;
+            if (day > term.day) return true;
+            if (day < term.day) return false;
+            if (hour > term.hour) return true;
+            if (hour < term.hour) return false;
+            return true;
+        }
+        
+        function getYearStemBranch(year, month, day, hour) {
+            const terms = getSolarTermsData(year);
+            let actualYear = year;
+            
+            if (terms.lichun) {
+                if (!isAfterSolarTerm(year, month, day, hour, terms.lichun)) {
+                    actualYear = year - 1;
+                }
+            }
+            
+            const stemIndex = (actualYear - 4) % 10;
+            const branchIndex = (actualYear - 4) % 12;
+            
+            return {
+                stem: heavenlyStems[stemIndex],
+                branch: earthlyBranches[branchIndex]
+            };
+        }
+        
+        function getMonthStemBranch(year, month, day, hour, yearStem) {
+            const terms = getSolarTermsData(year);
+            const prevTerms = getSolarTermsData(year - 1);
+            
+            let monthBranchIndex = 0;
+            
+            const lichun = terms.lichun || { month: 2, day: 4, hour: 0, minute: 0 };
+            const jingzhe = terms.jingzhe || { month: 3, day: 5, hour: 0, minute: 0 };
+            const qingming = terms.qingming || { month: 4, day: 4, hour: 0, minute: 0 };
+            const lixia = terms.lixia || { month: 5, day: 5, hour: 0, minute: 0 };
+            const mangzhong = terms.mangzhong || { month: 6, day: 5, hour: 0, minute: 0 };
+            const xiaoshu = terms.xiaoshu || { month: 7, day: 6, hour: 0, minute: 0 };
+            const liqiu = terms.liqiu || { month: 8, day: 7, hour: 0, minute: 0 };
+            const bailu = terms.bailu || { month: 9, day: 7, hour: 0, minute: 0 };
+            const hanlu = terms.hanlu || { month: 10, day: 8, hour: 0, minute: 0 };
+            const lidong = terms.lidong || { month: 11, day: 7, hour: 0, minute: 0 };
+            const daxue = terms.daxue || { month: 12, day: 6, hour: 0, minute: 0 };
+            const xiaohan = terms.xiaohan2025 || { month: 1, day: 5, hour: 0, minute: 0 };
+            
+            if (isAfterSolarTerm(year, month, day, hour, daxue)) {
+                monthBranchIndex = 0;
+            } else if (isAfterSolarTerm(year, month, day, hour, lidong)) {
+                monthBranchIndex = 11;
+            } else if (isAfterSolarTerm(year, month, day, hour, hanlu)) {
+                monthBranchIndex = 10;
+            } else if (isAfterSolarTerm(year, month, day, hour, bailu)) {
+                monthBranchIndex = 9;
+            } else if (isAfterSolarTerm(year, month, day, hour, liqiu)) {
+                monthBranchIndex = 8;
+            } else if (isAfterSolarTerm(year, month, day, hour, xiaoshu)) {
+                monthBranchIndex = 7;
+            } else if (isAfterSolarTerm(year, month, day, hour, mangzhong)) {
+                monthBranchIndex = 6;
+            } else if (isAfterSolarTerm(year, month, day, hour, lixia)) {
+                monthBranchIndex = 5;
+            } else if (isAfterSolarTerm(year, month, day, hour, qingming)) {
+                monthBranchIndex = 4;
+            } else if (isAfterSolarTerm(year, month, day, hour, jingzhe)) {
+                monthBranchIndex = 3;
+            } else if (isAfterSolarTerm(year, month, day, hour, lichun)) {
+                monthBranchIndex = 2;
+            } else {
+                monthBranchIndex = 1;
+            }
+            
+            const yearStemIndex = heavenlyStems.indexOf(yearStem);
+            
+            let monthStemBase;
+            if (yearStemIndex === 0 || yearStemIndex === 5) {
+                monthStemBase = 2;
+            } else if (yearStemIndex === 1 || yearStemIndex === 6) {
+                monthStemBase = 4;
+            } else if (yearStemIndex === 2 || yearStemIndex === 7) {
+                monthStemBase = 6;
+            } else if (yearStemIndex === 3 || yearStemIndex === 8) {
+                monthStemBase = 8;
+            } else {
+                monthStemBase = 0;
+            }
+            
+            let monthOffset = (monthBranchIndex - 2 + 12) % 12;
+            let monthStemIndex = (monthStemBase + monthOffset) % 10;
+            
+            return {
+                stem: heavenlyStems[monthStemIndex],
+                branch: earthlyBranches[monthBranchIndex]
+            };
+        }
+        
+        function getDayStemBranch(year, month, day, hour) {
+            let actualDay = day;
+            let actualMonth = month;
+            let actualYear = year;
+            
+            if (hour >= 23) {
+                actualDay++;
+            }
+            
+            if (actualDay > 31) {
+                actualDay = 1;
+                actualMonth++;
+                if (actualMonth > 12) {
+                    actualMonth = 1;
+                    actualYear++;
+                }
+            }
+            
+            let A = actualYear;
+            let is2000Later = actualYear >= 2000;
+            
+            if (is2000Later) {
+                A = actualYear - 2000;
+            } else {
+                A = actualYear - 1900;
+            }
+            
+            let base;
+            if (is2000Later) {
+                base = (A + 7) * 5 + 15 + Math.floor((A + 19) / 4);
+            } else {
+                base = (A + 3) * 5 + 55 + Math.floor((A - 1) / 4);
+            }
+            
+            let dayOfYear = 0;
+            const monthDays = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+            
+            const isLeap = (actualYear % 4 === 0 && actualYear % 100 !== 0) || (actualYear % 400 === 0);
+            if (isLeap) monthDays[1] = 29;
+            
+            for (let i = 0; i < actualMonth - 1; i++) {
+                dayOfYear += monthDays[i];
+            }
+            dayOfYear += actualDay;
+            
+            let total = (base + dayOfYear) % 60;
+            if (total === 0) total = 60;
+            
+            const stemIndex = (total - 1) % 10;
+            const branchIndex = (total - 1) % 12;
+            
+            return {
+                stem: heavenlyStems[stemIndex],
+                branch: earthlyBranches[branchIndex]
+            };
+        }
+        
+        function getHourStemBranch(dayStem, hour) {
+            let hourBranchIndex;
+            if (hour >= 23 || hour < 1) {
+                hourBranchIndex = 0;
+            } else if (hour >= 1 && hour < 3) {
+                hourBranchIndex = 1;
+            } else if (hour >= 3 && hour < 5) {
+                hourBranchIndex = 2;
+            } else if (hour >= 5 && hour < 7) {
+                hourBranchIndex = 3;
+            } else if (hour >= 7 && hour < 9) {
+                hourBranchIndex = 4;
+            } else if (hour >= 9 && hour < 11) {
+                hourBranchIndex = 5;
+            } else if (hour >= 11 && hour < 13) {
+                hourBranchIndex = 6;
+            } else if (hour >= 13 && hour < 15) {
+                hourBranchIndex = 7;
+            } else if (hour >= 15 && hour < 17) {
+                hourBranchIndex = 8;
+            } else if (hour >= 17 && hour < 19) {
+                hourBranchIndex = 9;
+            } else if (hour >= 19 && hour < 21) {
+                hourBranchIndex = 10;
+            } else {
+                hourBranchIndex = 11;
+            }
+            
+            const dayStemIndex = heavenlyStems.indexOf(dayStem);
+            let hourStemBase;
+            
+            if (dayStemIndex === 0 || dayStemIndex === 5) {
+                hourStemBase = 0;
+            } else if (dayStemIndex === 1 || dayStemIndex === 6) {
+                hourStemBase = 2;
+            } else if (dayStemIndex === 2 || dayStemIndex === 7) {
+                hourStemBase = 4;
+            } else if (dayStemIndex === 3 || dayStemIndex === 8) {
+                hourStemBase = 6;
+            } else {
+                hourStemBase = 8;
+            }
+            
+            let hourStemIndex = (hourStemBase + hourBranchIndex) % 10;
+            
+            return {
+                stem: heavenlyStems[hourStemIndex],
+                branch: earthlyBranches[hourBranchIndex]
+            };
+        }
+        
+        const bagua = {
+            qian: { name: '乾', symbol: [1, 1, 1], element: '天', meaning: '刚健、创造、领导' },
+            dui: { name: '兑', symbol: [1, 1, 0], element: '泽', meaning: '喜悦、交流、和谐' },
+            li: { name: '离', symbol: [1, 0, 1], element: '火', meaning: '光明、依附、美丽' },
+            zhen: { name: '震', symbol: [1, 0, 0], element: '雷', meaning: '震动、奋起、行动' },
+            xun: { name: '巽', symbol: [0, 1, 1], element: '风', meaning: '顺从、进入、灵活' },
+            kan: { name: '坎', symbol: [0, 1, 0], element: '水', meaning: '危险、困境、智慧' },
+            gen: { name: '艮', symbol: [0, 0, 1], element: '山', meaning: '停止、静止、稳重' },
+            kun: { name: '坤', symbol: [0, 0, 0], element: '地', meaning: '柔顺、包容、承载' }
+        };
+        
+        const sixtyFourGua = {
+            '111111': { name: '乾卦', interpretation: '乾卦象征天，代表刚健、创造、自强不息。此卦为纯阳之卦，预示着积极向上、充满活力，适合开创事业、积极进取。行事应刚健有力，但也要注意适度，避免过于刚愎自用。' },
+            '000000': { name: '坤卦', interpretation: '坤卦象征地，代表柔顺、包容、厚德载物。此卦为纯阴之卦，预示着需要以柔克刚、包容万物。适合与人合作、辅助他人，行事应稳重踏实，避免急功近利。' },
+            '100010': { name: '屯卦', interpretation: '屯卦象征初生、艰难。此卦表示初始阶段困难重重，但同时也蕴含着无限生机。面对困难应坚定信念、积极应对，不要轻易放弃。适合在困境中积累经验、蓄势待发。' },
+            '010001': { name: '蒙卦', interpretation: '蒙卦象征启蒙、教育。此卦表示需要学习、接受指导，适合寻求知识、培养品德。教育者应循循善诱，学习者应虚心求教。此时不宜盲目行动，应先提升自我。' },
+            '111010': { name: '需卦', interpretation: '需卦象征等待、时机。此卦表示需要耐心等待时机成熟，不宜急躁冒进。在等待过程中应保持积极心态、积蓄力量，时机一到便可采取行动。' },
+            '010111': { name: '讼卦', interpretation: '讼卦象征争讼、争议。此卦表示可能会遇到争执、纠纷，应谨慎处理。尽量避免诉讼，寻求和解。若不得已卷入争端，应保持冷静、据理力争，同时注意保护自己。' },
+            '010111': { name: '师卦', interpretation: '师卦象征军队、领导。此卦表示需要有组织、有纪律地行动，适合领导团队、组织活动。行事应公正无私、以身作则，方能得到众人拥护。' },
+            '000010': { name: '比卦', interpretation: '比卦象征亲近、合作。此卦表示适合与人交往、建立关系，寻找志同道合的伙伴。但应选择正直的朋友，避免与不良之人交往。亲近他人有助于获得支持和帮助。' },
+            '111011': { name: '小畜卦', interpretation: '小畜卦象征小有积蓄、积蓄力量。此卦表示目前力量尚不足，需要积累资源、积蓄能量。不宜大举行动，应先充实自己、做好准备，待时机成熟再谋求发展。' },
+            '110111': { name: '履卦', interpretation: '履卦象征实践、行动。此卦表示需要谨慎行事、步步为营，适合开始行动、实践计划。但应注意方式方法，遵循正道，避免鲁莽行事，方能顺利达成目标。' },
+            '111000': { name: '泰卦', interpretation: '泰卦象征通顺、安泰。此卦为大吉之卦，预示着事事顺利、诸事亨通。阴阳协调、上下和合，适合开展新事业、进行合作。此时应积极把握机会，但也要保持谦虚谨慎。' },
+            '000111': { name: '否卦', interpretation: '否卦象征闭塞、困难。此卦表示时运不佳、诸事不顺，需要谨慎行事。不宜盲目行动，应保持冷静、观察形势。困境中应坚守正道、积蓄力量，等待时机好转。' },
+            '111101': { name: '同人卦', interpretation: '同人卦象征与人同心、合作。此卦表示适合与人合作、团结他人，共同追求目标。应打破门户之见、广结善缘，寻找志同道合的伙伴。合作中应保持公正、互利共赢。' },
+            '101111': { name: '大有卦', interpretation: '大有卦象征大有收获、富裕。此卦表示事业有成、财富丰盈，是吉庆之卦。但在成功之时更应保持谦虚、戒骄戒躁，懂得分享、回馈社会，方能保持长久的繁荣。' },
+            '001000': { name: '谦卦', interpretation: '谦卦象征谦虚、谦逊。此卦表示谦虚谨慎能够带来好运，适合保持低调、虚心求教。在人际交往中应尊重他人、礼让为先，避免骄傲自满。谦虚是一种美德，也是成功的保障。' },
+            '000100': { name: '豫卦', interpretation: '豫卦象征喜悦、安乐。此卦表示心情愉悦、时运亨通，适合享受生活、庆祝成功。但乐极生悲，应保持适度的警惕，不要过于放纵。同时，应利用好时机积极进取。' },
+            '001100': { name: '随卦', interpretation: '随卦象征追随、顺应。此卦表示适合顺应时势、追随他人，不宜固执己见。在人际交往中应灵活应变、善于沟通，学会倾听他人意见。顺势而为方能有所收获。' },
+            '001100': { name: '蛊卦', interpretation: '蛊卦象征整治、改革。此卦表示需要面对问题、进行改革，适合整顿事业、纠正错误。应勇敢面对困境、积极寻求解决方案，不要逃避问题。改革虽有阵痛，但能带来新生。' },
+            '000011': { name: '临卦', interpretation: '临卦象征亲临、督导。此卦表示需要亲自参与、积极投入，适合领导工作、指导他人。行事应以身作则、真诚待人，方能得到他人的信任和支持。同时，注意保持谦逊。' },
+            '110000': { name: '观卦', interpretation: '观卦象征观察、审视。此卦表示需要冷静观察、深入思考，不宜盲目行动。适合学习、研究、观察形势。在做出决定之前，应充分了解情况、分析利弊，做到心中有数。' },
+            '100100': { name: '噬嗑卦', interpretation: '噬嗑卦象征咬合、决断。此卦表示需要果断行动、排除障碍，适合解决问题、处理纠纷。行事应刚毅果断、不畏艰难，勇往直前。同时，注意方式方法，避免过于强硬。' },
+            '001001': { name: '贲卦', interpretation: '贲卦象征装饰、美化。此卦表示适合注重外表、修饰形象，但不应忽视内涵。在人际交往中应注意言行举止、待人接物，展现良好形象。同时，保持内心的真诚和实在。' },
+            '000001': { name: '剥卦', interpretation: '剥卦象征剥落、衰退。此卦表示时运不佳、事业衰退，需要谨慎行事。不宜大举行动，应保持低调、积蓄力量。面对困境应保持冷静、寻找转机，不要轻易放弃。' },
+            '100000': { name: '复卦', interpretation: '复卦象征回复、复兴。此卦表示好运即将到来、事情出现转机，是吉庆之兆。适合重新开始、恢复事业。此时应积极把握机会、顺势而为，相信自己能够获得成功。' },
+            '100111': { name: '无妄卦', interpretation: '无妄卦象征不妄动、守正。此卦表示行事应遵循正道、不存非分之想，避免鲁莽妄为。适合诚实做人、踏实做事。保持真诚、不存侥幸心理，方能避免灾祸、获得成功。' },
+            '111001': { name: '大畜卦', interpretation: '大畜卦象征大有积蓄、蓄势待发。此卦表示需要积累资源、积蓄力量，为未来做好准备。适合学习、积累、投资。此时应保持耐心、不要急于求成，待时机成熟再大举行动。' },
+            '100001': { name: '颐卦', interpretation: '颐卦象征养生、保养。此卦表示需要注重养生、保养身心，适合调养身体、休息调整。同时，也指培养品德、提升自我。保持身心健康是事业成功的基础。' },
+            '100001': { name: '大过卦', interpretation: '大过卦象征过度、危险。此卦表示情况特殊、需要非常手段，行事应谨慎小心。不宜过度冒险，应权衡利弊、寻找解决方案。面对困境应保持冷静、积极应对，方能化险为夷。' },
+            '010010': { name: '坎卦', interpretation: '坎卦象征危险、困境。此卦表示遇到重重困难、险象环生，需要谨慎行事。保持冷静、不要惊慌，积极寻找出路。在困境中应坚守正道、保持信念，相信终将能够度过难关。' },
+            '101101': { name: '离卦', interpretation: '离卦象征光明、依附。此卦表示需要寻找光明、依附正道，适合积极进取、追求理想。行事应光明磊落、遵循正道，同时注意与人合作、相互支持。光明最终会战胜黑暗。' }
+        };
+        
+        function initYearSelect() {
+            const yearSelect = document.getElementById('year');
+            const currentYear = new Date().getFullYear();
+            
+            for (let year = currentYear; year >= 1920; year--) {
+                const option = document.createElement('option');
+                option.value = year;
+                option.textContent = year + '年';
+                yearSelect.appendChild(option);
+            }
+        }
+        
+        function initDaySelect() {
+            const daySelect = document.getElementById('day');
+            
+            for (let day = 1; day <= 31; day++) {
+                const option = document.createElement('option');
+                option.value = day;
+                option.textContent = day + '日';
+                daySelect.appendChild(option);
+            }
+        }
+        
+        function generateGua(bazi) {
+            let total = 0;
+            for (let i = 0; i < 4; i++) {
+                total += heavenlyStems.indexOf(bazi[i].stem);
+                total += earthlyBranches.indexOf(bazi[i].branch);
+            }
+            
+            const upperGuaIndex = Math.floor(total / 8) % 8;
+            const lowerGuaIndex = total % 8;
+            
+            const guaKeys = Object.keys(bagua);
+            const upperGua = bagua[guaKeys[upperGuaIndex]];
+            const lowerGua = bagua[guaKeys[lowerGuaIndex]];
+            
+            const guaSymbol = [...upperGua.symbol, ...lowerGua.symbol];
+            const guaKey = guaSymbol.join('');
+            
+            let gua = sixtyFourGua[guaKey];
+            
+            if (!gua) {
+                const guaNames = [
+                    '乾为天', '坤为地', '水雷屯', '山水蒙', '水天需', '天水讼', 
+                    '地水师', '水地比', '风天小畜', '天泽履', '地天泰', '天地否',
+                    '天火同人', '火天大有', '地山谦', '雷地豫', '泽雷随', '山风蛊',
+                    '地泽临', '风地观', '火雷噬嗑', '山火贲', '山地剥', '地雷复',
+                    '天雷无妄', '山天大畜', '山雷颐', '泽风大过', '坎为水', '离为火',
+                    '泽山咸', '雷风恒', '天山遁', '雷天大壮', '火地晋', '地火明夷',
+                    '风火家人', '火泽睽', '水山蹇', '雷水解', '山泽损', '风雷益',
+                    '泽天夬', '天风姤', '泽地萃', '地风升', '泽水困', '水风井',
+                    '泽火革', '火风鼎', '震为雷', '艮为山', '风山渐', '雷泽归妹',
+                    '雷火丰', '火山旅', '巽为风', '兑为泽', '风水涣', '水泽节',
+                    '风泽中孚', '雷山小过', '水火既济', '火水未济'
+                ];
+                
+                const guaIndex = (upperGuaIndex * 8 + lowerGuaIndex) % 64;
+                gua = {
+                    name: guaNames[guaIndex] + '卦',
+                    interpretation: `此卦由${upperGua.element}${upperGua.name}与${lowerGua.element}${lowerGua.name}组合而成。${upperGua.meaning}与${lowerGua.meaning}相互作用，形成独特的卦象。行事应顺应天时、把握地利，保持积极心态，相信自己的能力。遇到困难不要退缩，勇于面对挑战，终将能够获得成功。`
+                };
+            }
+            
+            return {
+                name: gua.name,
+                symbol: guaSymbol,
+                upperGua: upperGua,
+                lowerGua: lowerGua,
+                interpretation: gua.interpretation
+            };
+        }
+        
+        function displayBazi(bazi) {
+            const baziDisplay = document.getElementById('baziDisplay');
+            const labels = ['年柱', '月柱', '日柱', '时柱'];
+            
+            baziDisplay.innerHTML = '';
+            
+            for (let i = 0; i < 4; i++) {
+                const column = document.createElement('div');
+                column.className = 'bazi-column';
+                
+                const label = document.createElement('div');
+                label.className = 'bazi-label';
+                label.textContent = labels[i];
+                
+                const stem = document.createElement('div');
+                stem.className = 'heavenly-stem';
+                stem.textContent = bazi[i].stem;
+                
+                const branch = document.createElement('div');
+                branch.className = 'earthly-branch';
+                branch.textContent = bazi[i].branch;
+                
+                column.appendChild(label);
+                column.appendChild(stem);
+                column.appendChild(branch);
+                baziDisplay.appendChild(column);
+            }
+        }
+        
+        function displayGua(gua) {
+            document.getElementById('guaName').textContent = gua.name;
+            
+            const guaSymbol = document.getElementById('guaSymbol');
+            guaSymbol.innerHTML = '';
+            
+            for (let i = 0; i < 6; i++) {
+                const line = document.createElement('div');
+                line.className = 'gua-line';
+                
+                const yao = document.createElement('div');
+                yao.className = gua.symbol[i] === 1 ? 'yao' : 'yao broken';
+                
+                line.appendChild(yao);
+                guaSymbol.appendChild(line);
+            }
+            
+            const interpretation = document.getElementById('guaInterpretation');
+            interpretation.innerHTML = `
+                <h3>卦象解读</h3>
+                <p><strong>上卦：</strong>${gua.upperGua.element}${gua.upperGua.name} - ${gua.upperGua.meaning}</p>
+                <p><strong>下卦：</strong>${gua.lowerGua.element}${gua.lowerGua.name} - ${gua.lowerGua.meaning}</p>
+                <h3 style="margin-top: 20px;">详细解读</h3>
+                <p>${gua.interpretation}</p>
+            `;
+        }
+        
+        const ziweiPrinciple = `
+            <h3>紫微斗数基本原理</h3>
+            <p><strong>什么是紫微斗数？</strong></p>
+            <p>紫微斗数是中国传统命理学中的一种重要流派，被誉为"天下第一神数"。它以出生年月日时为基础，将108颗星曜排布在十二宫位中，形成一张命盘，以此推断人的命运吉凶、性格特点、事业财运等。</p>
+            
+            <p><strong>十二宫位含义：</strong></p>
+            <p><strong>命宫</strong>：代表人的核心性格、天赋特质、外在表现，是命盘的核心。</p>
+            <p><strong>兄弟宫</strong>：代表兄弟姐妹关系、同辈合作、竞争态势。</p>
+            <p><strong>夫妻宫</strong>：代表婚姻感情、配偶情况、两性关系。</p>
+            <p><strong>子女宫</strong>：代表子女情况、下属晚辈、创意表现。</p>
+            <p><strong>财帛宫</strong>：代表财运状况、理财能力、物质欲望。</p>
+            <p><strong>疾厄宫</strong>：代表身体健康、潜在疾病、心理状态。</p>
+            <p><strong>迁移宫</strong>：代表外出发展、人际形象、机遇变化。</p>
+            <p><strong>交友宫</strong>：代表朋友关系、社交网络、助力情况。</p>
+            <p><strong>事业宫</strong>：代表事业发展、职业选择、社会地位。</p>
+            <p><strong>田宅宫</strong>：代表家庭房产、固定资产、内心世界。</p>
+            <p><strong>福德宫</strong>：代表精神享受、福报运气、心态情绪。</p>
+            <p><strong>父母宫</strong>：代表父母长辈、学业基础、名誉名声。</p>
+            
+            <p><strong>主要星曜分类：</strong></p>
+            <p><strong>紫微星系（北斗主星）</strong>：紫微、天机、太阳、武曲、天同、廉贞</p>
+            <p><strong>天府星系（南斗主星）</strong>：天府、太阴、贪狼、巨门、天相、天梁、七杀、破军</p>
+            <p><strong>吉星</strong>：左辅、右弼、文昌、文曲、天魁、天钺、禄存、天马</p>
+            <p><strong>煞星</strong>：擎羊、陀罗、火星、铃星、天空、地劫</p>
+            
+            <p><strong>四化星</strong>：化禄（财禄、机会）、化权（权力、能力）、化科（名声、智慧）、化忌（阻碍、困扰）</p>
+        `;
+        
+        const palaceNames = ['命宫', '兄弟宫', '夫妻宫', '子女宫', '财帛宫', '疾厄宫', 
+                            '迁移宫', '交友宫', '事业宫', '田宅宫', '福德宫', '父母宫'];
+        
+        const mainStars = {
+            '紫微': { meaning: '帝星，代表尊贵、领导力、自尊心', element: '土' },
+            '天机': { meaning: '智慧星，代表聪明、灵活、变动', element: '木' },
+            '太阳': { meaning: '官贵星，代表光明、热情、事业心', element: '火' },
+            '武曲': { meaning: '财星，代表坚毅、务实、财运', element: '金' },
+            '天同': { meaning: '福星，代表温和、享受、福气', element: '水' },
+            '廉贞': { meaning: '次桃花星，代表复杂、桃花、约束', element: '火' },
+            '天府': { meaning: '府库星，代表稳重、包容、储蓄', element: '土' },
+            '太阴': { meaning: '财星，代表温柔、内敛、阴性力量', element: '水' },
+            '贪狼': { meaning: '桃花星，代表欲望、才华、机遇', element: '木' },
+            '巨门': { meaning: '口舌星，代表口才、是非、观察', element: '水' },
+            '天相': { meaning: '印星，代表稳重、辅助、责任', element: '水' },
+            '天梁': { meaning: '荫星，代表长寿、荫蔽、智慧', element: '土' },
+            '七杀': { meaning: '将星，代表魄力、冲劲、竞争', element: '金' },
+            '破军': { meaning: '耗星，代表破坏、创新、变动', element: '水' }
+        };
+        
+        const fourHua = {
+            '化禄': '代表财禄、机遇、享受、贵人运强',
+            '化权': '代表权力、能力、行动力、领导力强',
+            '化科': '代表名声、智慧、考试运、贵人相助',
+            '化忌': '代表阻碍、困扰、变动、需要谨慎'
+        };
+        
+        function calculateMingGong(lunarMonth, hourBranchIndex) {
+            const monthPositions = [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 0, 1];
+            let monthPos = monthPositions[(lunarMonth - 1) % 12];
+            
+            let mingGongIndex = (monthPos - hourBranchIndex + 12) % 12;
+            let shenGongIndex = (monthPos + hourBranchIndex) % 12;
+            
+            return {
+                mingGong: mingGongIndex,
+                shenGong: shenGongIndex
+            };
+        }
+        
+        function getNayinWuXing(stem, branch) {
+            const nayinMap = {
+                '甲子': '海中金', '乙丑': '海中金',
+                '丙寅': '炉中火', '丁卯': '炉中火',
+                '戊辰': '大林木', '己巳': '大林木',
+                '庚午': '路旁土', '辛未': '路旁土',
+                '壬申': '剑锋金', '癸酉': '剑锋金',
+                '甲戌': '山头火', '乙亥': '山头火',
+                '丙子': '涧下水', '丁丑': '涧下水',
+                '戊寅': '城头土', '己卯': '城头土',
+                '庚辰': '白蜡金', '辛巳': '白蜡金',
+                '壬午': '杨柳木', '癸未': '杨柳木',
+                '甲申': '泉中水', '乙酉': '泉中水',
+                '丙戌': '屋上土', '丁亥': '屋上土',
+                '戊子': '霹雳火', '己丑': '霹雳火',
+                '庚寅': '松柏木', '辛卯': '松柏木',
+                '壬辰': '长流水', '癸巳': '长流水',
+                '甲午': '沙中金', '乙未': '沙中金',
+                '丙申': '山下火', '丁酉': '山下火',
+                '戊戌': '平地木', '己亥': '平地木',
+                '庚子': '壁上土', '辛丑': '壁上土',
+                '壬寅': '金箔金', '癸卯': '金箔金',
+                '甲辰': '覆灯火', '乙巳': '覆灯火',
+                '丙午': '天河水', '丁未': '天河水',
+                '戊申': '大驿土', '己酉': '大驿土',
+                '庚戌': '钗钏金', '辛亥': '钗钏金',
+                '壬子': '桑柘木', '癸丑': '桑柘木',
+                '甲寅': '大溪水', '乙卯': '大溪水',
+                '丙辰': '沙中土', '丁巳': '沙中土',
+                '戊午': '天上火', '己未': '天上火',
+                '庚申': '石榴木', '辛酉': '石榴木',
+                '壬戌': '大海水', '癸亥': '大海水'
+            };
+            
+            const key = stem + branch;
+            const nayin = nayinMap[key] || '未知';
+            
+            if (nayin.includes('金')) return { element: '金', type: '金四局' };
+            if (nayin.includes('木')) return { element: '木', type: '木三局' };
+            if (nayin.includes('水')) return { element: '水', type: '水二局' };
+            if (nayin.includes('火')) return { element: '火', type: '火六局' };
+            if (nayin.includes('土')) return { element: '土', type: '土五局' };
+            
+            return { element: '未知', type: '未知' };
+        }
+        
+        function getFourHua(yearStem) {
+            const huaMap = {
+                '甲': { '廉贞': '化禄', '破军': '化权', '武曲': '化科', '太阳': '化忌' },
+                '乙': { '天机': '化禄', '天梁': '化权', '紫微': '化科', '太阴': '化忌' },
+                '丙': { '天同': '化禄', '天机': '化权', '文昌': '化科', '廉贞': '化忌' },
+                '丁': { '太阴': '化禄', '天同': '化权', '天机': '化科', '巨门': '化忌' },
+                '戊': { '贪狼': '化禄', '太阴': '化权', '右弼': '化科', '天机': '化忌' },
+                '己': { '武曲': '化禄', '贪狼': '化权', '天梁': '化科', '文曲': '化忌' },
+                '庚': { '太阳': '化禄', '武曲': '化权', '太阴': '化科', '天同': '化忌' },
+                '辛': { '巨门': '化禄', '太阳': '化权', '文曲': '化科', '文昌': '化忌' },
+                '壬': { '天梁': '化禄', '紫微': '化权', '左辅': '化科', '武曲': '化忌' },
+                '癸': { '破军': '化禄', '巨门': '化权', '太阴': '化科', '贪狼': '化忌' }
+            };
+            
+            return huaMap[yearStem] || {};
+        }
+        
+        function generateZiweiAnalysis(gender, year, month, day, hour, bazi) {
+            const yearStem = bazi[0].stem;
+            const yearBranch = bazi[0].branch;
+            
+            let hourBranchIndex = 0;
+            if (hour >= 23 || hour < 1) hourBranchIndex = 0;
+            else if (hour >= 1 && hour < 3) hourBranchIndex = 1;
+            else if (hour >= 3 && hour < 5) hourBranchIndex = 2;
+            else if (hour >= 5 && hour < 7) hourBranchIndex = 3;
+            else if (hour >= 7 && hour < 9) hourBranchIndex = 4;
+            else if (hour >= 9 && hour < 11) hourBranchIndex = 5;
+            else if (hour >= 11 && hour < 13) hourBranchIndex = 6;
+            else if (hour >= 13 && hour < 15) hourBranchIndex = 7;
+            else if (hour >= 15 && hour < 17) hourBranchIndex = 8;
+            else if (hour >= 17 && hour < 19) hourBranchIndex = 9;
+            else if (hour >= 19 && hour < 21) hourBranchIndex = 10;
+            else hourBranchIndex = 11;
+            
+            const mingShenGong = calculateMingGong(month, hourBranchIndex);
+            const mingGongIndex = mingShenGong.mingGong;
+            const shenGongIndex = mingShenGong.shenGong;
+            
+            const mingGongStem = bazi[0].stem;
+            const mingGongBranch = earthlyBranches[mingGongIndex];
+            const wuXing = getNayinWuXing(mingGongStem, mingGongBranch);
+            
+            const siHua = getFourHua(yearStem);
+            
+            let analysis = {};
+            analysis.gender = gender === 'male' ? '男' : '女';
+            analysis.mingGong = palaceNames[mingGongIndex];
+            analysis.mingGongBranch = earthlyBranches[mingGongIndex];
+            analysis.shenGong = palaceNames[shenGongIndex];
+            analysis.wuXing = wuXing;
+            
+            const personalityAnalysis = {
+                '命宫': {
+                    '紫微': '性格尊贵，有领导力，自尊心强，适合管理岗位。但可能有些孤高，需要注意人际关系。',
+                    '天机': '聪明机智，思维敏捷，适合需要动脑筋的工作。但可能想法太多，缺乏稳定性。',
+                    '太阳': '热情开朗，光明磊落，事业心强。注意保护眼睛和心脏，避免过于操劳。',
+                    '武曲': '坚毅果断，务实稳重，财运不错。但可能过于刚强，缺乏柔韧性。',
+                    '天同': '温和善良，懂得享受生活，福气不错。但可能缺乏上进心，需要主动出击。',
+                    '廉贞': '复杂多变，桃花旺盛，适合公关艺术类工作。注意控制情绪，避免是非。',
+                    '天府': '稳重包容，善于储蓄，适合理财相关工作。但可能有些保守，需要放开手脚。',
+                    '太阴': '温柔内敛，心思细腻，适合艺术文化工作。注意情绪调节，避免过度忧郁。',
+                    '贪狼': '多才多艺，桃花旺盛，善于把握机会。但欲望较强，需要懂得节制。',
+                    '巨门': '口才出众，观察敏锐，适合销售教育工作。注意言语表达，避免口舌是非。',
+                    '天相': '稳重踏实，责任心强，适合辅助管理工作。但可能有些依赖，需要独立决策。',
+                    '天梁': '智慧成熟，乐于助人，适合咨询医疗工作。注意身体保养，避免过度操心。',
+                    '七杀': '魄力十足，行动力强，适合开创性工作。但可能过于冲动，需要三思而行。',
+                    '破军': '勇于创新，敢于变革，适合需要突破的工作。但变动较大，需要稳定根基。'
+                },
+                '夫妻宫': {
+                    '紫微': '配偶能力强，有事业心。但可能有些强势，需要相互理解。',
+                    '天机': '配偶聪明机灵，变化较快。感情中需要更多的沟通和稳定。',
+                    '太阳': '配偶热情开朗，光明磊落。男性则妻子贤惠，女性则丈夫有担当。',
+                    '武曲': '配偶坚毅果断，事业心强。但可能有些刚强，需要柔化相处。',
+                    '天同': '配偶温和善良，懂得享受。感情和谐，相互扶持。',
+                    '廉贞': '配偶桃花旺，相貌不错。感情中需要注意经营，避免桃花是非。',
+                    '天府': '配偶稳重踏实，善于理财。家庭观念强，值得依靠。',
+                    '太阴': '配偶温柔体贴，心思细腻。感情深厚，相互关怀。',
+                    '贪狼': '配偶有才华，人缘好。感情丰富多彩，但需要注意专一。',
+                    '巨门': '配偶口才好，善于分析。感情中需要注意沟通方式，避免争吵。',
+                    '天相': '配偶稳重可靠，责任心强。适合稳定的婚姻关系。',
+                    '天梁': '配偶成熟稳重，乐于助人。感情中可能有些长辈般的关怀。',
+                    '七杀': '配偶有魄力，行动力强。感情可能有些波折，需要相互包容。',
+                    '破军': '配偶有个性，敢于创新。感情中变动较大，需要经营维护。'
+                },
+                '财帛宫': {
+                    '紫微': '财运不错，有贵人相助。但可能有些虚荣，需要理性消费。',
+                    '天机': '财运变动，适合脑力劳动求财。注意抓住机会，稳健投资。',
+                    '太阳': '财运光明，事业求财为主。注意理财规划，避免冲动消费。',
+                    '武曲': '财星入命，财运旺盛。适合投资创业，把握机会。',
+                    '天同': '财运平顺，懂得享受。不适合冒险投资，稳健为上。',
+                    '廉贞': '财运复杂，有得有失。适合偏财，但需要谨慎。',
+                    '天府': '财库充盈，善于储蓄。适合稳健理财，积累财富。',
+                    '太阴': '财运平稳，适合不动产投资。注意规划，稳定增长。',
+                    '贪狼': '财运起伏，偏财机会多。需要懂得见好就收。',
+                    '巨门': '财运靠口才，适合销售中介。注意是非，避免纠纷。',
+                    '天相': '财运稳定，适合合作求财。找对伙伴，共同发展。',
+                    '天梁': '财运靠智慧，适合咨询服务。用专业能力求财。',
+                    '七杀': '财运有魄力，适合开创性求财。但风险较大，需要谨慎。',
+                    '破军': '财运变动，先破后立。不宜守旧，需要创新求财。'
+                },
+                '事业宫': {
+                    '紫微': '事业有成，适合管理岗位。有领导力，能够独当一面。',
+                    '天机': '事业多变，适合技术设计。动脑为主，灵活应变。',
+                    '太阳': '事业光明，适合公职管理。热心事业，积极向上。',
+                    '武曲': '事业务实，适合金融技术。坚毅肯干，事业有成。',
+                    '天同': '事业平顺，适合服务创意。轻松愉快，享受工作。',
+                    '廉贞': '事业复杂，适合公关娱乐。需要经营人脉，把握机会。',
+                    '天府': '事业稳定，适合行政管理。稳重可靠，值得信赖。',
+                    '太阴': '事业内敛，适合艺术文化。细心认真，默默耕耘。',
+                    '贪狼': '事业多样，适合销售娱乐。多才多艺，善于交际。',
+                    '巨门': '事业靠口才，适合教育媒体。表达能力强，善于分析。',
+                    '天相': '事业辅助，适合行政助理。责任心强，团队合作。',
+                    '天梁': '事业智慧，适合咨询医疗。专业能力强，受人信赖。',
+                    '七杀': '事业开创，适合军警销售。有冲劲，勇于挑战。',
+                    '破军': '事业变革，适合创新行业。敢于突破，不按常规。'
+                }
+            };
+            
+            const randomStars = ['紫微', '天机', '太阳', '武曲', '天同', '廉贞', 
+                                '天府', '太阴', '贪狼', '巨门', '天相', '天梁', 
+                                '七杀', '破军'];
+            
+            const seed = (year + month + day + hour + mingGongIndex) % 14;
+            const mingGongStar = randomStars[seed];
+            const fuQiGongStar = randomStars[(seed + 3) % 14];
+            const caiBoGongStar = randomStars[(seed + 5) % 14];
+            const shiYeGongStar = randomStars[(seed + 7) % 14];
+            
+            analysis.mainStars = {
+                '命宫': mingGongStar,
+                '夫妻宫': fuQiGongStar,
+                '财帛宫': caiBoGongStar,
+                '事业宫': shiYeGongStar
+            };
+            
+            analysis.personality = personalityAnalysis['命宫'][mingGongStar] || '性格稳重，适应能力强，适合各种环境发展。';
+            analysis.relationship = personalityAnalysis['夫妻宫'][fuQiGongStar] || '感情运平稳，适合相互理解、共同经营的关系。';
+            analysis.wealth = personalityAnalysis['财帛宫'][caiBoGongStar] || '财运中等，适合稳健理财，避免冒险投资。';
+            analysis.career = personalityAnalysis['事业宫'][shiYeGongStar] || '事业运平稳，适合稳步发展，积累经验。';
+            
+            analysis.siHua = siHua;
+            
+            return analysis;
+        }
+        
+        function displayZiwei(ziweiAnalysis) {
+            const ziweiSection = document.getElementById('ziweiSection');
+            const ziweiPrincipleEl = document.getElementById('ziweiPrinciple');
+            const mingpanSummary = document.getElementById('mingpanSummary');
+            const ziweiInterpretation = document.getElementById('ziweiInterpretation');
+            
+            ziweiSection.style.display = 'block';
+            
+            ziweiPrincipleEl.innerHTML = ziweiPrinciple;
+            
+            let summaryHtml = `<h3>命盘基本信息</h3>`;
+            summaryHtml += `<p><strong>性别：</strong>${ziweiAnalysis.gender}</p>`;
+            summaryHtml += `<p><strong>命宫：</strong>${ziweiAnalysis.mingGong}（${ziweiAnalysis.mingGongBranch}）</p>`;
+            summaryHtml += `<p><strong>身宫：</strong>${ziweiAnalysis.shenGong}</p>`;
+            summaryHtml += `<p><strong>五行局：</strong>${ziweiAnalysis.wuXing.type}</p>`;
+            
+            summaryHtml += `<h4 style="margin-top: 15px; color: #e0c068;">主要星曜分布：</h4>`;
+            for (const [palace, star] of Object.entries(ziweiAnalysis.mainStars)) {
+                summaryHtml += `<p><strong>${palace}：</strong>${star} - ${mainStars[star]?.meaning || ''}</p>`;
+            }
+            
+            summaryHtml += `<h4 style="margin-top: 15px; color: #e0c068;">四化星：</h4>`;
+            for (const [star, hua] of Object.entries(ziweiAnalysis.siHua)) {
+                summaryHtml += `<p><strong>${star}${hua}：</strong>${fourHua[hua] || ''}</p>`;
+            }
+            
+            mingpanSummary.innerHTML = summaryHtml;
+            mingpanSummary.className = 'interpretation';
+            
+            let interpretationHtml = `<h3>详细解读</h3>`;
+            interpretationHtml += `<h4 style="margin-top: 15px; color: #e0c068;">性格分析：</h4>`;
+            interpretationHtml += `<p>${ziweiAnalysis.personality}</p>`;
+            
+            interpretationHtml += `<h4 style="margin-top: 15px; color: #e0c068;">感情婚姻：</h4>`;
+            interpretationHtml += `<p>${ziweiAnalysis.relationship}</p>`;
+            
+            interpretationHtml += `<h4 style="margin-top: 15px; color: #e0c068;">财运分析：</h4>`;
+            interpretationHtml += `<p>${ziweiAnalysis.wealth}</p>`;
+            
+            interpretationHtml += `<h4 style="margin-top: 15px; color: #e0c068;">事业发展：</h4>`;
+            interpretationHtml += `<p>${ziweiAnalysis.career}</p>`;
+            
+            interpretationHtml += `<h4 style="margin-top: 15px; color: #e0c068;">综合建议：</h4>`;
+            interpretationHtml += `<p>根据您的命盘特点，建议您：</p>`;
+            interpretationHtml += `<p>1. 发挥命宫主星${ziweiAnalysis.mainStars['命宫']}的优势，${mainStars[ziweiAnalysis.mainStars['命宫']]?.meaning || '做好自己的事情'}。</p>`;
+            interpretationHtml += `<p>2. 在感情中注意经营，相互理解支持。</p>`;
+            interpretationHtml += `<p>3. 财运方面稳健为主，抓住机会的同时避免冒险。</p>`;
+            interpretationHtml += `<p>4. 事业上发挥自己的特长，稳步发展。</p>`;
+            interpretationHtml += `<p style="margin-top: 15px; font-style: italic; color: #a0a0a0;">以上解读仅供参考，命运掌握在自己手中。命盘只是揭示潜在的特质和趋势，真正的人生还需要自己的努力和选择。</p>`;
+            
+            ziweiInterpretation.innerHTML = interpretationHtml;
+        }
+        
+        document.getElementById('baziForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const year = parseInt(document.getElementById('year').value);
+            const month = parseInt(document.getElementById('month').value);
+            const day = parseInt(document.getElementById('day').value);
+            const hour = parseInt(document.getElementById('hour').value);
+            const gender = document.getElementById('gender').value;
+            
+            const yearStemBranch = getYearStemBranch(year, month, day, hour);
+            const monthStemBranch = getMonthStemBranch(year, month, day, hour, yearStemBranch.stem);
+            const dayStemBranch = getDayStemBranch(year, month, day, hour);
+            const hourStemBranch = getHourStemBranch(dayStemBranch.stem, hour);
+            
+            const bazi = [
+                { stem: yearStemBranch.stem, branch: yearStemBranch.branch },
+                { stem: monthStemBranch.stem, branch: monthStemBranch.branch },
+                { stem: dayStemBranch.stem, branch: dayStemBranch.branch },
+                { stem: hourStemBranch.stem, branch: hourStemBranch.branch }
+            ];
+            
+            const gua = generateGua(bazi);
+            
+            displayBazi(bazi);
+            displayGua(gua);
+            
+            const ziweiAnalysis = generateZiweiAnalysis(gender, year, month, day, hour, bazi);
+            displayZiwei(ziweiAnalysis);
+            
+            document.getElementById('resultSection').classList.add('show');
+            
+            document.getElementById('resultSection').scrollIntoView({ behavior: 'smooth' });
+        });
+        
+        window.onload = function() {
+            initYearSelect();
+            initDaySelect();
+        };
+    </script>
+</body>
+</html>
